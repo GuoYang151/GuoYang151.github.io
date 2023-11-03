@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-可变参数列表" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/15/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8/" class="article-date">
+  <time class="dt-published" datetime="2023-08-14T16:00:00.000Z" itemprop="datePublished">2023-08-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/08/15/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8/">C++中可变参数列表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h3><p>在C++中，形参内含有省略号(…)表示可变参数的形参。这意味着该函数可以接受任意数量的参数。当函数的参数个数是可变的或者无法确定时，使用可变参数可以提供更大的灵活性。</p>
+<h3 id="表现形式："><a href="#表现形式：" class="headerlink" title="表现形式："></a><strong>表现形式：</strong></h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">printIntegers</span><span class="params">(<span class="type">int</span> num, ...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//函数体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>“…”告诉编译器，在函数调用时不检查形参类型是否与实参类型相同，也不检查参数个数。</strong>在上面的代码中，编译器只检查第一个参数是否为整型，而不对其他参数进行检查。</p>
+<h3 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a><strong>使用方法：</strong></h3><p>对于可变参数的函数，需要进行特殊的处理。</p>
+<p>首先需要引用 **&lt;stdarg.h&gt;**头文件，然后利用va_list类型和va_start、va_arg、va_end 3个宏读取传递到函数中的参数值。</p>
+<p>接下来介绍三个函数和结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type <span class="title function_">va_arg</span><span class="params">( va_list ap, type )</span>;</span><br></pre></td></tr></table></figure>
+
+<p>​	ap：va_list 类型的变量，指向参数的指针<br>​	type：指要获取的参数的类型</p>
+<p>​	va_arg返回变长参数的值，第二个参数是该变长参数的类型；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">va_start</span><span class="params">(va_list ap, last)</span> </span><br></pre></td></tr></table></figure>
+
+<p>​	ap ：这是一个va_list 类型的对象，它用来存储通过 va_arg 获取额外参数时所必需的信息。<br>​	last ：最后一个传递给函数的已知的固定参数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">va_end</span><span class="params">(va_list ap)</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a><strong>使用步骤</strong></h3><ol>
+<li>定义一个va_list类型的变量，变量是指向参数的指针；</li>
+<li>va_start初始化刚定义的变量，第二个参数是最后一个显式声明的参数；</li>
+<li>va_arg返回变长参数的值，第二个参数是该变长参数的类型；</li>
+<li>va_end将a)定义的变量重置为NULL。</li>
+</ol>
+<p><strong>第一种：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">test_printf2</span><span class="params">(<span class="type">int</span> num,...)</span></span><br><span class="line">&#123;</span><br><span class="line">    va_list args;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">    va_start(args,num);</span><br><span class="line">    <span class="keyword">for</span>(i; i &lt; num; i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, va_arg(args, <span class="type">int</span>));</span><br><span class="line">    va_end(args);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    test_printf2(<span class="number">2</span>,<span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20231025173509717.png" alt="image-20231025173509717"></p>
+<p><strong>第二种:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">test_printf6</span><span class="params">(<span class="type">char</span> *headData, <span class="type">char</span> *format,...)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buff[<span class="number">4096</span>];</span><br><span class="line">    va_list args;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memcpy</span>(buff, headData, <span class="built_in">strlen</span>(headData));</span><br><span class="line">    va_start(args, format);</span><br><span class="line">    vsnprintf(buff+<span class="built_in">strlen</span>(headData), <span class="number">1024</span>, format, args);</span><br><span class="line">    va_end(args);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, buff);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test_printf6(<span class="string">&quot;requestData&quot;</span>, <span class="string">&quot;len is %d, data is %s&quot;</span>, <span class="number">10</span>, <span class="string">&quot;helloworld&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/15/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8/" data-id="cloi34wtk0001csuy6jybb9ld" data-title="C++中可变参数列表" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-C++中new和malloc" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/11/C++%E4%B8%ADnew%E5%92%8Cmalloc/" class="article-date">
+  <time class="dt-published" datetime="2023-08-10T16:00:00.000Z" itemprop="datePublished">2023-08-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/08/11/C++%E4%B8%ADnew%E5%92%8Cmalloc/">C++中new和malloc</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="1-new运算符"><a href="#1-new运算符" class="headerlink" title="1.new运算符"></a>1.new运算符</h3><p> C++中，用new和delete动态创建和释放数组或单个对象。<br>动态创建对象时，只需指定其数据类型，而不必为该对象命名，new表达式返回指向该新创建对象的指针，我们可以通过指针来访问此对象。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pi=<span class="keyword">new</span> <span class="type">int</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这个new表达式在堆区中分配创建了一个整型对象，并返回此对象的地址，并用该地址初始化指针pi 。</p>
+<p><strong>动态创建对象的初始化</strong><br>动态创建的对象可以用初始化变量的方式初始化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pi=<span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">100</span>); <span class="comment">//指针pi所指向的对象初始化为100</span></span><br><span class="line">string *ps=<span class="keyword">new</span> <span class="built_in">string</span>(<span class="number">10</span>,<span class="string">&#x27;9&#x27;</span>);<span class="comment">//*ps 为“9999999999”</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不提供显示初始化，对于类类型，用该类的默认构造函数初始化；而内置类型的对象则无初始化。<br>也可以对动态创建的对象做值初始化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pi=<span class="keyword">new</span> <span class="built_in">int</span>( );<span class="comment">//初始化为0</span></span><br><span class="line"><span class="type">int</span> *pi=<span class="keyword">new</span> <span class="type">int</span>;<span class="comment">//pi 指向一个没有初始化的int</span></span><br><span class="line">string *ps=<span class="keyword">new</span> <span class="built_in">string</span>( );<span class="comment">//初始化为空字符串 （对于提供了默认构造函数的类类型，没有必要对其对象进行值初始化）</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>撤销动态创建的对象</strong><br>delete表达式释放指针指向的地址空间。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> pi ;<span class="comment">// 释放单个对象</span></span><br><span class="line"><span class="keyword">delete</span> [ ]pi;<span class="comment">//释放数组</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>如果指针指向的不是new分配的内存地址，则使用delete是不合法的。</strong></p>
+<p><strong>在delete之后，重设指针的值</strong><br>delete p; </p>
+<p>&#x2F;&#x2F;执行完该语句后，p变成了不确定的指针，在很多机器上，尽管p值没有明确定义，但仍然存放了它之前所指对象的地址，然后p所指向的内存已经被释放了，所以p不再有效。此时，该指针变成了悬垂指针（悬垂指针指向曾经存放对象的内存，但该对象已经不存在了）。悬垂指针往往导致程序错误，而且很难检测出来。<br>一旦删除了指针所指的对象，立即将指针置为0，这样就非常清楚的指明指针不再指向任何对象。</p>
+<p>（零值指针：int *ip&#x3D;0;）</p>
+<p> <strong>区分零值指针和NULL指针</strong><br><strong>零值指针，是值是0的指针，可以是任何一种指针类型，可以是通用变体类型void<em>也可以是char</em>，int*等等。</strong><br>空指针，<strong>其实空指针只是一种编程概念，就如一个容器可能有空和非空两种基本状态</strong>，而在非空时可能里面存储了一个数值是0，因此<strong>空指针是人为认为的指针不提供任何地址讯息。</strong></p>
+<h3 id="2-malloc运算符"><a href="#2-malloc运算符" class="headerlink" title="2.malloc运算符"></a>2.malloc运算符</h3><p>malloc的全称是<strong>memory allocation，中文叫动态内存分配。</strong><br>原型：extern void *malloc(unsigned int num_bytes);<br>说明：分配长度为num_bytes字节的内存块。如果分配成功则返回指向被分配内存的指针，分配失败返回空指针NULL。当内存不再使用时，应使用free()函数将内存块释放。</p>
+<p>malloc()到底从哪里得到了内存空间？<br>答案是从堆里面获得空间。也就是说函数返回的指针是指向堆里面的一块内存。操作系统中有一个记录空闲内存地址的链表。当操作系统收到程序的申请时，就会遍历该链表，然后就寻找第一个空间大于所申请空间的堆结点，然后就将该结点从空闲结点链表中删除，并将该结点的空间分配给程序。</p>
+<h3 id="3-malloc和new的区别："><a href="#3-malloc和new的区别：" class="headerlink" title="3.malloc和new的区别："></a>3.<strong>malloc和new的区别：</strong></h3><p><strong>new 返回指定类型的指针，并且可以自动计算所需要大小。</strong></p>
+<ol>
+<li><pre><code class="c++"> int *p; 　　
+ p = new int; //返回类型为int* 类型(整数型指针)，分配大小为 sizeof(int); 　　
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```c++</span><br><span class="line">int* parr; 　　</span><br><span class="line">parr = new int [100]; //返回类型为 int* 类型(整数型指针)，分配大小为 sizeof(int) * 100; 　　</span><br></pre></td></tr></table></figure>
+
+</code></pre>
+</li>
+<li><p>而 malloc 则必须要由我们计算字节数，并且在返回后强行转换为实际类型的指针。</p>
+</li>
+</ol>
+<p> 　　</p>
+  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>* p; 　　</span><br><span class="line">p = (<span class="type">int</span> *) <span class="built_in">malloc</span> (<span class="built_in">sizeof</span>(<span class="type">int</span>)*<span class="number">128</span>);<span class="comment">//分配128个（可根据实际需要替换该数值）整型存储单元，并将这128个连续的整型存储单元的首地址存储到指针变量p中 </span></span><br><span class="line"><span class="type">double</span> *pd=(<span class="type">double</span> *) <span class="built_in">malloc</span> (<span class="built_in">sizeof</span>(<span class="type">double</span>)*<span class="number">12</span>);<span class="comment">//分配12个double型存储单元，并将首地址存储到指针变量pd中</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>malloc 只管分配内存，并不能对所得的内存进行初始化，所以得到的一片新内存中，其值将是随机的。</strong></p>
+<p>除了分配及最后释放的方法不一样以外，通过malloc或new得到指针，在其它操作上保持一致</p>
+<h3 id="4-相同点"><a href="#4-相同点" class="headerlink" title="4.相同点"></a>4.相同点</h3><p>malloc、free、new、delete均是在堆上申请内存空间，释放时手动释放</p>
+<h3 id="5-不同点"><a href="#5-不同点" class="headerlink" title="5.不同点"></a>5.不同点</h3><ol>
+<li><p>malloc与free是函数，new和delete是操作符</p>
+</li>
+<li><p>malloc申请空间时需要手动计算申请空间大小,new直接跟类名. </p>
+</li>
+<li><p>malloc申请成功后返回void*，使用时需要强转，new则不需要.</p>
+</li>
+<li><p>malloc申请的空间没有初始化,new可以进行初始化</p>
+</li>
+<li><p>申请失败malloc则返回null,new则需要捕获异常。</p>
+</li>
+<li><p>在对于自定义的类型对象时，malloc和ree仅申请和释放空间，new则调用构造函数进行实例化对象，delete先调用析构函数，将资源进行释放，再释放空间。</p>
+</li>
+<li><p>. new和delete的效率要低于malloc和free，因为new和delete底层封装了malloc和free</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/11/C++%E4%B8%ADnew%E5%92%8Cmalloc/" data-id="cloi34wtg0000csuydfmn21yd" data-title="C++中new和malloc" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/15/%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8/">C++中可变参数列表</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/11/C++%E4%B8%ADnew%E5%92%8Cmalloc/">C++中new和malloc</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
